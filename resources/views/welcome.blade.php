@@ -85,6 +85,7 @@
                 </div>
 
                 <div class="links">
+                    <a href="{{ route('pertanyaan.index') }}">Forum</a>
                     <a href="https://github.com/gagumcerdas">GagahGumelar</a>
                     <a href="https://github.com/cahyowijaya">CahyoWijaya</a>
                     <a href="https://github.com/nelricMemoirs">nelricMemoirs</a>

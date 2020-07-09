@@ -17,6 +17,7 @@ class CreatePertanyaansTable extends Migration
             $table->id();
             $table->string('judul_pertanyaan');
             $table->text('isi_pertanyaan');
+            $table->string('tag');
             $table->timestamps();
         });
     }
