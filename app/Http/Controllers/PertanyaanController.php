@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Pertanyaan;
 use App\Jawaban;
+use App\Pkomentar;
+use App\Jkomentar;
 
 class PertanyaanController extends Controller
 {
@@ -16,6 +18,7 @@ class PertanyaanController extends Controller
     public function index()
     {
         $pertanyaan = Pertanyaan::orderBy('created_at', 'desc')->get();
+
         return \view('UI.question')->with('pertanyaan', $pertanyaan);
     }
 
@@ -61,6 +64,7 @@ class PertanyaanController extends Controller
     public function show($id)
     {
         $judul =  Pertanyaan::find($id);
+        // dd(Pertanyaan::find($id));
         return \view('UI.show')->with('pertanyaan', $judul);
     }
 
