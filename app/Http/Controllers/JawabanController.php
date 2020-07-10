@@ -41,6 +41,12 @@ class JawabanController extends Controller
      */
     public function store(Request $request)
     {
+        //
+        // dd($request->all());
+        $this->validate($request, [
+            'id_pertanyaan' => 'required',
+            'jawaban' => 'required'
+        ]);
 
         $jawaban = new Jawaban;
         $jawaban->pertanyaan_id = $request->input('id_pertanyaan');
@@ -59,7 +65,8 @@ class JawabanController extends Controller
     public function show($id)
     {
         //
-
+        $judul =  Pertanyaan::find($id);
+        return \view('jawaban.show')->with('pertanyaan', $judul);
     }
 
     /**
@@ -71,7 +78,8 @@ class JawabanController extends Controller
     public function edit($id)
     {
         //
-
+        $judul =  Jawaban::find($id);
+        return \view('UI.edit')->with('pertanyaan', $judul);
     }
 
     /**
