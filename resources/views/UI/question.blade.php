@@ -8,23 +8,23 @@
 
 <hr>
 @if (count($pertanyaan) > 0)
-@foreach ($pertanyaan as $judul)
-<div class="well">
-    <h3><a href="/pertanyaan/{{$judul->id}}">{{$judul->judul_pertanyaan}}</a></h3>
-    {{-- agar bisa dibaca format HTML pada CkEditor gunakan {!! var !!} --}}
-    <p>Content: {!! Str::limit($judul->isi_pertanyaan, 50) !!} <span class=" text-success"> click title for detail</span></p>
-    <small>Written at {{$judul->created_at}}</small>
-    &emsp;
-    <small>Updated at {{$judul->updated_at}}</small><br>
-    <small>tag : </small>
-    @foreach (explode(' ', $judul->tag) as $item)
+    @foreach ($pertanyaan as $judul)
+        <div class="well container-fluid">
+            <h3><a href="/pertanyaan/{{$judul->id}}">{{$judul->judul_pertanyaan}}</a></h3>
+            {{-- agar bisa dibaca format HTML pada CkEditor gunakan {!! var !!} --}}
+            <p>Content: {!! Str::limit($judul->isi_pertanyaan, 100) !!} <span class=" text-success"> click title for detail</span></p>
+            <small>Written at {{$judul->created_at}}  by {{$judul->user->name}}</small>
+            &emsp;
+            <small>Updated at {{$judul->updated_at}}</small><br>
+            <small>tag : </small>
+            @foreach (explode(' ', $judul->tag) as $item)
 
-    <small class="pr-1 pl-1 text-light", , style="background-color: rgb(0, 128, 49)">{{$item}}</small>    
+            <small class="pr-1 pl-1 text-light", , style="background-color: rgb(0, 128, 49)">{{$item}}</small>    
+            @endforeach
+            
+            <hr>
+        </div>
     @endforeach
-    
-    <hr>
-</div>
-@endforeach
 
 @else
 <h4>No Article Yet</h4>

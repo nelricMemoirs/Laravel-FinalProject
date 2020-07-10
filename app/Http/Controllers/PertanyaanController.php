@@ -7,6 +7,16 @@ use App\Pertanyaan;
 
 class PertanyaanController extends Controller
 {
+        /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except'=>['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -46,6 +56,7 @@ class PertanyaanController extends Controller
         $pertanyaan->judul_pertanyaan = $request->input('judul');
         $pertanyaan->isi_pertanyaan = $request->input('isi_pertanyaan');
         $pertanyaan->tag = $request->input('tag');
+        $pertanyaan->user_id = auth()->user()->id;
         $pertanyaan->save();
 
         return redirect('/pertanyaan')->with('success', 'Article created');
@@ -61,6 +72,7 @@ class PertanyaanController extends Controller
     public function show($id)
     {
         $judul =  Pertanyaan::find($id);
+        // $comment = Pertanyaan::find($id);
         return \view('UI.show')->with('pertanyaan', $judul);
     }
 
@@ -73,6 +85,10 @@ class PertanyaanController extends Controller
     public function edit($id)
     {
         $judul =  Pertanyaan::find($id);
+
+        if (auth()->user()->id !== $judul->user_id) {
+            return \redirect('/pertanyaan')->with('error', 'Unauthorize');
+        }
         return \view('UI.edit')->with('pertanyaan', $judul);
     }
 
@@ -109,6 +125,9 @@ class PertanyaanController extends Controller
     public function destroy($id)
     {
         $article = Pertanyaan::find($id);
+        if (auth()->user()->id !== $article->user_id) {
+            return \redirect('/pertanyaan')->with('error', 'Unauthorize');
+        }
         $article->delete();
         return \redirect('/pertanyaan')->with('success', 'Question Deleted');
     }
