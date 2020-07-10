@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pertanyaan;
+use App\Jawaban;
 
 class PertanyaanController extends Controller
 {
@@ -15,7 +16,6 @@ class PertanyaanController extends Controller
     public function index()
     {
         $pertanyaan = Pertanyaan::orderBy('created_at', 'desc')->get();
-        
         return \view('UI.question')->with('pertanyaan', $pertanyaan);
     }
 
@@ -41,7 +41,7 @@ class PertanyaanController extends Controller
             'judul' => 'required',
             'isi_pertanyaan' => 'required'
         ]);
-        
+
         $pertanyaan = new Pertanyaan;
         $pertanyaan->judul_pertanyaan = $request->input('judul');
         $pertanyaan->isi_pertanyaan = $request->input('isi_pertanyaan');
@@ -89,7 +89,7 @@ class PertanyaanController extends Controller
             'judul' => 'required',
             'isi_pertanyaan' => 'required'
         ]);
-        
+
         $article = Pertanyaan::find($id);
         $article->judul_pertanyaan = $request->input('judul');
         $article->isi_pertanyaan = $request->input('isi_pertanyaan');

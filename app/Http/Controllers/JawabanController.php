@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jawaban;
+use App\Pertanyaan;
 use Illuminate\Http\Request;
 
 class JawabanController extends Controller
@@ -14,6 +16,9 @@ class JawabanController extends Controller
     public function index()
     {
         //
+        $jawaban = Jawaban::orderBy('created_at', 'desc')->get();
+
+        return \view('UI.jawaban')->with('jawaban', $jawaban);
     }
 
     /**
@@ -21,9 +26,11 @@ class JawabanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $judul =  Pertanyaan::find($id);
+        return \view('jawaban.create')->with('pertanyaan', $judul);
     }
 
     /**
@@ -34,7 +41,13 @@ class JawabanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $jawaban = new Jawaban;
+        $jawaban->pertanyaan_id = $request->input('id_pertanyaan');
+        $jawaban->jawaban = $request->input('jawaban');
+        $jawaban->save();
+
+        return redirect('/pertanyaan')->with('success', 'Article created');
     }
 
     /**
@@ -46,6 +59,7 @@ class JawabanController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -57,6 +71,7 @@ class JawabanController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -69,6 +84,18 @@ class JawabanController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'judul' => 'required',
+            'isi_pertanyaan' => 'required'
+        ]);
+
+        $article = Jawaban::find($id);
+        $article->judul_pertanyaan = $request->input('judul');
+        $article->isi_pertanyaan = $request->input('isi_pertanyaan');
+        $article->tag = $request->input('tag');
+        $article->save();
+
+        return redirect('/pertanyaan')->with('success', 'Question Updated');
     }
 
     /**
@@ -80,5 +107,8 @@ class JawabanController extends Controller
     public function destroy($id)
     {
         //
+        $article = Jawaban::find($id);
+        $article->delete();
+        return \redirect('/pertanyaan')->with('success', 'Question Deleted');
     }
 }

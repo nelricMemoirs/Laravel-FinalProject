@@ -21,3 +21,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('pertanyaan', 'PertanyaanController');
+
+Route::resource('jawaban', 'JawabanController');
