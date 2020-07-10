@@ -30,14 +30,7 @@
             <a href="/jawaban/{{$judul->id}}" class=" btn btn-default btn-warning">Beri Jawaban</a>
         </div>
     </div>
-    <div class="row">
-        <div class="col text-center">
-            <p>Jawaban : </p>
-        @foreach($judul->jawaban as $t)
-        {!! $t->jawaban !!}
-        @endforeach
-        </div>
-    </div>
+
     <hr>
 </div>
 @endforeach

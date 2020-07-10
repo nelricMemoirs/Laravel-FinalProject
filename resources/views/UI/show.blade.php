@@ -9,9 +9,9 @@
 <small>tag : </small>
 
 @foreach (explode(' ', $pertanyaan->tag) as $item)
-    
+
     <small class=" pr-1 pl-1 text-light ", style="background-color: rgb(0, 128, 49)">{{$item}}</small>
-    
+
 @endforeach
 
 <hr>
@@ -19,6 +19,14 @@
         {!! $pertanyaan->isi_pertanyaan !!} {{-- agar bisa dibaca format HTML pada CkEditor gunakan {!! var !!} --}}
     </div>
     <hr>
+    <div class="row">
+        <div class="col text-center">
+            <p>Jawaban : </p>
+        @foreach($pertanyaan->jawaban as $t)
+        {!! $t->jawaban !!}
+        @endforeach
+        </div>
+    </div>
     <a href="/pertanyaan/{{$pertanyaan->id}}/edit" class=" btn btn-default btn-outline-primary">Edit Question</a>
 
     {!! Form::open(['action'=> ['PertanyaanController@destroy', $pertanyaan->id], 'method'=> 'POST', 'class' => 'float-right']) !!}
