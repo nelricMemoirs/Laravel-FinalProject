@@ -14,4 +14,13 @@ class Pertanyaan extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    //
+    public function jawaban(){
+    	return $this->hasMany('App\Jawaban');
+    }
+
+    public function pkomentar(){
+    	return $this->hasMany('App\Pkomentar');
+    }
+
 }
