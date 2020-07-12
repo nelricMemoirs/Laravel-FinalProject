@@ -107,13 +107,15 @@ class JawabanController extends Controller
             'jawaban' => 'required',
             'id_pertanyaan' => 'required'
         ]);
-
+        
         $answer = Jawaban::find($id);
         $answer->jawaban = $request->input('jawaban');
         $answer->pertanyaan_id = $request->input('id_pertanyaan');
         $answer->save();
+        
+        $id_pertanyaan = $request->id_pertanyaan;
 
-        return redirect('/pertanyaan')->with('success', 'Jawaban Updated');
+        return redirect('pertanyaan/'.$id_pertanyaan)->with('success', 'Jawaban Updated');
     }
 
     /**
