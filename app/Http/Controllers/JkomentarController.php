@@ -56,7 +56,7 @@ class JkomentarController extends Controller
             'jawaban_id' => $request->jawaban_id,
             'user_id' => auth()->user()->id
     	]);
-        return redirect()->route('pertanyaan.show', [$pertanyaan_id]);
+        return redirect()->route('pertanyaan.show', [$pertanyaan_id])->with('success', 'Comment Answer Created');
     }
 
     /**
