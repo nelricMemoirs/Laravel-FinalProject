@@ -58,7 +58,7 @@ class PkomentarController extends Controller
             'user_id' => auth()->user()->id
     	]);
             
-        return redirect('pertanyaan/'.$pertanyaan_id);
+        return redirect('pertanyaan/'.$pertanyaan_id)->with('success', 'Comment Question Created');
     }
 
     /**
