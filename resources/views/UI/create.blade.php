@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-        <h1>Create an Article</h1>
+        
         {!! Form::open(['action'=> 'PertanyaanController@store', 'method' => 'POST']) !!}
         <div class=" container-fluid">
+            <h1>Create an Article</h1>
             <div class="form-group">
                 {{Form::label('judul', 'Judul')}}
                 {{Form::text('judul', '',['class' => 'form-control col-lg-7 col-sm-5', 'placeholder' => 'title'])}}

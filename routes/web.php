@@ -20,9 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('pertanyaan', 'PertanyaanController');
-
+Route::resource('pertanyaan', 'PertanyaanController');Route::resource('jawaban', 'JawabanController');
 Route::resource('jawaban', 'JawabanController');
-
 Route::resource('pkomentar','PkomentarController');
 Route::resource('jkomentar','JkomentarController');
+Route::get('vote/upvote/{pertanyaan_id}', 'VoteController@vote')->name('vote');
+Route::get('vote/downvote/{pertanyaan_id}', 'VoteController@downvote')->name('downvote');

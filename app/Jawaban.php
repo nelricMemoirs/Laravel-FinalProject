@@ -11,6 +11,9 @@ class Jawaban extends Model
     }
 
     public function jkomentar(){
-    	return $this->hasMany('App\Jkomentar');
+        return $this->hasMany('App\Jkomentar');
+    }
+    public function question(){
+    	return $this->belongsTo(Pertanyaan::class, 'pertanyaan_id');
     }
 }
