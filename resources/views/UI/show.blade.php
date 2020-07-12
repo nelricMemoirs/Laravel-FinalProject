@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 {{-- content --}}
 <div class="container-fluid">
     <a href="/pertanyaan" class="btn btn-outline-secondary">Back</a>
@@ -51,7 +52,7 @@
                         <span class=" ml-3"> {{$pertanyaan->countUpVoters() - $pertanyaan->countDownVoters()}} </span> 
 
                                 {{-- route downvote ada di VoteController --}}
-                        <a href="{{ route('vote', $pertanyaan->id) }}"  class="btn btn-link btn-sm">
+                        <a href="{{ route('downvote', $pertanyaan->id) }}"  class="btn btn-link btn-sm">
                         <i class="fa fa-sort-desc" aria-hidden="true" style="font-size:50px;color:gray"></i>
                         </a>
                 @endif
@@ -120,20 +121,21 @@
                                 {{-- Jawaban --}}
                             @foreach($pertanyaan->jawaban as $t)
                                 <h5>Jawaban : </h5>
-                                {!! $t->jawaban !!}
+                                <div id= 'best' class=" best p-2">{!! $t->jawaban !!} </div>
                                 <div class="col text-center">
                                 {{-- edit jawaban --}}
                                 @if (!Auth::guest())
-                                @if (Auth::user()->id == $pertanyaan->user_id)
-                                <a href="/jawaban/{{$t->id}}/edit" class=" btn btn-default btn-outline-primary float-left btn-sm">Edit Answer</a>
-                                
-                                {{-- delete jawaban --}}
-                                {!! Form::open(['action'=> ['JawabanController@destroy', $t->id], 'method'=> 'POST', 'class' => 'inline']) !!}
-                                {{Form::hidden('_method', 'DELETE')}}
-                                {{Form::submit('Delete Answer', ['class' => 'btn btn-danger btn-sm float-right'])}}
-                                {!! Form::close() !!}
+                                    @if (Auth::user()->id == $t->user_id)
+                                        <a href="/jawaban/{{$t->id}}/edit" class=" btn btn-default btn-outline-primary float-left btn-sm">Edit Answer</a>
+                                    
+                                        {{-- delete jawaban --}}
+                                        {!! Form::open(['action'=> ['JawabanController@destroy', $t->id], 'method'=> 'POST', 'class' => 'inline']) !!}
+                                        {{Form::hidden('_method', 'DELETE')}}
+                                        {{Form::submit('Delete Answer', ['class' => 'btn btn-danger btn-sm float-right'])}}
+                                        {!! Form::close() !!}
+                                    @endif
                                 @endif
-                                @endif
+                                <a href="{{ route('squirrel', $t->id) }}" class="btn btn-success cc" >Mark as best answer</a>
                                 {{-- end of jawaban --}}
                                 <br><br><hr>
                                 {{-- komentar --}}
@@ -152,4 +154,24 @@
                 {{-- end content --}}
     </div>
 </div>
+
+<script type="text/javascript">
+    function changeClass(){
+        $('#best').addClass('border border-success');
+    }
+    $('#best').removeClass('border border-success');
+
+    if ($(document).on('click', '.cc', changeClass)) {
+        $(document).ready(function(){
+
+            $('#best').addClass('border border-success');
+        })
+        
+    } 
+    
+
+
+    // $('#MyElement').click(changeClass);
+</script> 
+
 @endsection

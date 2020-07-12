@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pertanyaan;
+use App\Jawaban;
 use App\User;
 
 class VoteController extends Controller
@@ -68,5 +69,17 @@ class VoteController extends Controller
 
             return redirect()->route('pertanyaan.show', [$id])->with('error', 'You canceled down-vote');
         }
+    }
+    public function bestanswer($id){
+        $answer = Jawaban::find($id);
+        $comment = Pertanyaan::find($id);
+        $user = auth()->user();
+        $score = $answer->user->score + 15;
+        $answer->user->update(['score' => $score]);
+
+        $class = 'border border-success';
+
+        $pertanyaan = $answer->question->id;
+        return redirect()->route('pertanyaan.show', $answer->question->id)->with('error', 'best answer');
     }
 }

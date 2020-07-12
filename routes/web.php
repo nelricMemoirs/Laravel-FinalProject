@@ -26,3 +26,4 @@ Route::resource('pkomentar','PkomentarController');
 Route::resource('jkomentar','JkomentarController');
 Route::get('vote/upvote/{pertanyaan_id}', 'VoteController@vote')->name('vote');
 Route::get('vote/downvote/{pertanyaan_id}', 'VoteController@downvote')->name('downvote');
+Route::get('vote/bestanswer/{pertanyaan_id}', ['uses' =>'VoteController@bestanswer', 'as' => 'squirrel']);

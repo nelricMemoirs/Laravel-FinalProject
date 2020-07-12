@@ -77,6 +77,7 @@ class PertanyaanController extends Controller
     {
         $judul =  Pertanyaan::find($id);
         $user = auth()->user();
+        
         // $comment = Pertanyaan::find($id);
         return \view('UI.show')->with('pertanyaan', $judul)->with('user', $user);
     }

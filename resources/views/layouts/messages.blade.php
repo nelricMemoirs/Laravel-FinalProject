@@ -21,3 +21,11 @@
         </div>
     
 @endif
+
+{{-- @if (session('change'))
+        <div class="alert alert-success">
+            {{session('success')}}
+        </div>
+        document
+    
+@endif --}}
