@@ -7,6 +7,7 @@ use App\Pertanyaan;
 use App\Jawaban;
 use App\Pkomentar;
 use App\Jkomentar;
+use App\Vote;
 
 class PertanyaanController extends Controller
 {
@@ -75,8 +76,9 @@ class PertanyaanController extends Controller
     public function show($id)
     {
         $judul =  Pertanyaan::find($id);
+        $user = auth()->user();
         // $comment = Pertanyaan::find($id);
-        return \view('UI.show')->with('pertanyaan', $judul);
+        return \view('UI.show')->with('pertanyaan', $judul)->with('user', $user);
     }
 
     /**
@@ -88,6 +90,7 @@ class PertanyaanController extends Controller
     public function edit($id)
     {
         $judul =  Pertanyaan::find($id);
+        
 
         if (auth()->user()->id !== $judul->user_id) {
             return \redirect('/pertanyaan')->with('error', 'Unauthorize');

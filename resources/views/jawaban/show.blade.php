@@ -23,7 +23,7 @@
     <div class="form-group">
         {{Form::text('id_pertanyaan', $pertanyaan->id,['class' => 'form-control col-lg-7 col-sm-5 invisible', 'placeholder' => 'title'])}}
         {{Form::label('jawaban', 'jawaban :')}}
-        {{Form::textarea('jawaban', '',['id'=> 'editor', 'class' => 'form-control col-lg-7 col-sm-5', 'placeholder' => 'isi jawaban'])}}
+        {{Form::textarea('jawaban', '',['id'=> 'editor', 'class' => 'form-control col-lg-7 col-sm-5', 'placeholder' => 'isi jawaban masa sih'])}}
     </div>
     {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
 

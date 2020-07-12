@@ -22,7 +22,7 @@
                         <tr>
                             <th>Title</th>
                             <th></th>
-                            <th></th>
+                        <th>Score: {{$user->score}}</th>
                         </tr>
                         @foreach ($pertanyaan as $item)
                             <tr>

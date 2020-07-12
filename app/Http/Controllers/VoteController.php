@@ -21,10 +21,52 @@ class VoteController extends Controller
     {
         $comment = Pertanyaan::find($id);
         $user = auth()->user();
-        if ($user) {
+        if ($user->hasDownVoted($comment) == true && $user->hasUpVoted($comment) == false) {
+            $user->cancelVote($comment);
+            $score = $comment->user->score + 1;
+            $comment->user->update(['score' => $score]);
+            
+            return redirect()->route('pertanyaan.show', [$id])->with('success', 'down-vote canceled');
+        }
+        
+        else if ($user->hasDownVoted($comment) == true || $user->hasUpVoted($comment) == null) {
             $user->upVote($comment);
-            return \view('UI.show')->with('pertanyaan', $comment, 'user_id', $user->id);
+            $score = $comment->user->score + 10;
+            $comment->user->update(['score' => $score]);
+
+            return redirect()->route('pertanyaan.show', [$id])->with('success', 'You up-voted');
+        }else {
+            $user->cancelVote($comment);
+            $score = $comment->user->score - 10;
+            $comment->user->update(['score' => $score]);
+            
+            // $comment->user->score -= 10;
+            return redirect()->route('pertanyaan.show', [$id])->with('error', 'You canceled up-vote');
         }
 
+    }
+    public function downvote($id){
+        $comment = Pertanyaan::find($id);
+        $user = auth()->user();
+        
+        if ($user->hasDownVoted($comment) == false && $user->hasUpvoted($comment) == true) {
+            $user->cancelVote($comment);
+            $score = $comment->user->score - 10;
+            $comment->user->update(['score' => $score]);
+            
+            return redirect()->route('pertanyaan.show', [$id])->with('success', 'up-vote canceled');
+        }else if ($user->hasDownVoted($comment) == false){
+            $user->downVote($comment);
+            $score = $comment->user->score - 1;
+            $comment->user->update(['score' => $score]);
+            
+            return redirect()->route('pertanyaan.show', [$id])->with('success', 'You down-voted');
+        }else {
+            $user->cancelVote($comment);
+            $score = $comment->user->score + 1;
+            $comment->user->update(['score' => $score]);
+
+            return redirect()->route('pertanyaan.show', [$id])->with('error', 'You canceled down-vote');
+        }
     }
 }

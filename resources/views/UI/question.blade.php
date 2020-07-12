@@ -23,12 +23,18 @@
             @endforeach
             
             <hr>
+            <div class="row">
+                <div class="col text-center">
+                <a href="{{ route('jawaban.show', $judul->id)}}" class=" btn btn-default btn-warning">Beri Jawaban</a>
+                </div>
+            </div>
+        
+            <hr>
         </div>
     @endforeach
-
-
-
-
+    </div>
+    
+</div>
 @else
 <h4>No Article Yet</h4>
 @endif

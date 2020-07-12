@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class JawabanController extends Controller
 {
+        /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -51,9 +61,10 @@ class JawabanController extends Controller
         $jawaban = new Jawaban;
         $jawaban->pertanyaan_id = $request->input('id_pertanyaan');
         $jawaban->jawaban = $request->input('jawaban');
+        $jawaban->user_id = auth()->user()->id;
         $jawaban->save();
 
-        return redirect('/pertanyaan')->with('success', 'Article created');
+        return redirect('/pertanyaan')->with('success', 'Answer created');
     }
 
     /**
@@ -79,7 +90,7 @@ class JawabanController extends Controller
     {
         //
         $judul =  Jawaban::find($id);
-        return \view('UI.edit')->with('pertanyaan', $judul);
+        return \view('jawaban.edit')->with('jawaban', $judul);
     }
 
     /**
@@ -93,17 +104,16 @@ class JawabanController extends Controller
     {
         //
         $this->validate($request, [
-            'judul' => 'required',
-            'isi_pertanyaan' => 'required'
+            'jawaban' => 'required',
+            'id_pertanyaan' => 'required'
         ]);
 
-        $article = Jawaban::find($id);
-        $article->judul_pertanyaan = $request->input('judul');
-        $article->isi_pertanyaan = $request->input('isi_pertanyaan');
-        $article->tag = $request->input('tag');
-        $article->save();
+        $answer = Jawaban::find($id);
+        $answer->jawaban = $request->input('jawaban');
+        $answer->pertanyaan_id = $request->input('id_pertanyaan');
+        $answer->save();
 
-        return redirect('/pertanyaan')->with('success', 'Question Updated');
+        return redirect('/pertanyaan')->with('success', 'Jawaban Updated');
     }
 
     /**
@@ -115,8 +125,8 @@ class JawabanController extends Controller
     public function destroy($id)
     {
         //
-        $article = Jawaban::find($id);
-        $article->delete();
-        return \redirect('/pertanyaan')->with('success', 'Question Deleted');
+        $jawaban = Jawaban::find($id);
+        $jawaban->delete();
+        return \redirect('/pertanyaan')->with('success', 'Jawaban Deleted');
     }
 }

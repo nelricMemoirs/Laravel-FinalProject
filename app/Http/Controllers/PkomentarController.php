@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 
 class PkomentarController extends Controller
 {
+            /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -38,6 +48,9 @@ class PkomentarController extends Controller
     public function store(Request $request)
     {   
         // dd('tes');
+        $this->validate($request, [
+            'isi_komentar' => 'required',
+        ]);
         $pertanyaan_id = $request->pertanyaan_id;
         Pkomentar::create([
     		'isi_komentar' => $request->isi_komentar,

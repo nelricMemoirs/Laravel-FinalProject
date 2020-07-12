@@ -17,11 +17,10 @@
     <form action="{{route('jkomentar.store')}}" method="post">
             
         @csrf
-            <textarea name="isi_komentar" id="" class="form-control mb-1" cols="30" rows="3"></textarea>
+            <textarea name="isi_komentar" id="editor" class="form-control mb-1" cols="30" rows="3" placeholder="comment"></textarea>
             <input type="hidden" name="jawaban_id" value="{{$jawaban->id}}">
             <input type="hidden" name="p_id" value="{{$jawaban->pertanyaan_id}}">
             <button type="submit" class="btn btn-success btn-sm float-right" >Submit</button>
         </form>
-   
     <!-- {{Form::submit('Submit', ['class' => 'btn btn-primary'])}} -->
 @endsection
